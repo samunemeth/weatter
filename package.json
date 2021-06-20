@@ -1,0 +1,17 @@
+{
+  "name": "weatter",
+  "version": "1.0.0",
+  "description": "A bot that predicts weather using twitter photos",
+  "main": "index.js",
+  "scripts": {
+    "run": "node ."
+  },
+  "author": "Németh Samu",
+  "license": "ISC",
+  "dependencies": {
+    "exif": "^0.6.0",
+    "node-fetch": "^2.6.1",
+    "twit": "^2.2.11",
+    "util": "^0.12.3"
+  }
+}

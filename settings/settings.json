@@ -1,0 +1,16 @@
+{
+    "places": {
+        "saveFilePath": "./saves/places.json"
+    },
+
+    "twitter": {
+        "requestLimit": 5,
+        "consoleLog": true,
+        "downloadLoc": "./cache/downloads/"
+    },
+
+    "categories": {
+        "sunrise": "#sunrise",
+        "sunset": "#sunset"
+    }
+}
