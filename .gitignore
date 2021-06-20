@@ -1,0 +1,12 @@
+# node
+node_modules/
+
+# vscode
+.vscode/
+
+# login info
+settings/auth.json
+
+# cache
+cache/downloads/*
+cache/metadata.json
