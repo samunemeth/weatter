@@ -32,7 +32,7 @@ console.log('> running...');
 // get tweets with media, and extract the image urls
 (async () => {
     const urls = await twitter.getImages(settings.categories);
-    // twitter.download.images(urls); // disable for performance
+    twitter.download.images(urls); // disable for performance
     places.file.save();
 })();
 
