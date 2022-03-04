@@ -4,11 +4,11 @@ from skimage import filters, io, util, color, transform, draw
 import numpy as np
 
 # settings
-input_path = './cache/input/'
-output_path = './cache/output/'
+input_path = "./cache/input/"
+output_path = "./cache/output/"
 
-input_file_format = '.jpg'
-output_file_format = '.png'
+input_file_format = ".jpg"
+output_file_format = ".png"
 
 dark_limit = 150
 light_limit = 230
@@ -22,11 +22,9 @@ noise_limit = 4
 near_top_tresshold = 4
 
 # infinite line to endpoint generator
-
-
 def line_endpoints(point, slope, shape):
 
-    slope = slope if slope != 0 else .0000001
+    slope = slope if slope != 0 else 0.0000001
     shape = (shape[1], shape[0])
 
     points = []
@@ -55,16 +53,16 @@ def line_endpoints(point, slope, shape):
 
 
 # get downloaded images
-images = io.ImageCollection(f'{input_path}*{input_file_format}')
+images = io.ImageCollection(f"{input_path}*{input_file_format}")
 
 # get edges of image
 for (input, file_path) in zip(images, images.files):
 
     # get filename
-    file_name = file_path.split('\\')[-1][:-len(input_file_format)]
+    file_name = file_path.split("\\")[-1][: -len(input_file_format)]
 
     # print (can be removed)
-    print(f'> Processing image: \'{file_name}\'')
+    print(f"> Processing image: '{file_name}'")
 
     # get edges of image
     horizon = color.rgb2gray(input)
@@ -72,13 +70,12 @@ for (input, file_path) in zip(images, images.files):
 
     # remove static from image
     max = np.amax(horizon)
-    with np.nditer(horizon, op_flags=['readwrite']) as it:
+    with np.nditer(horizon, op_flags=["readwrite"]) as it:
         for x in it:
             x[...] = 0 if x < max / noise_limit else max
 
     # Classic straight-line Hough transform
-    tested_angles = np.linspace(
-        angleFrom, angleTo, angleDetail, endpoint=False)
+    tested_angles = np.linspace(angleFrom, angleTo, angleDetail, endpoint=False)
     h, t, d = transform.hough_line(horizon, theta=tested_angles)
 
     # set up list
@@ -89,7 +86,7 @@ for (input, file_path) in zip(images, images.files):
 
         # calculate needed parameters
         point = dist * np.array([np.cos(angle), np.sin(angle)])
-        slope = np.tan(angle + np.pi/2)
+        slope = np.tan(angle + np.pi / 2)
 
         # get endpoints
         p1, p2 = line_endpoints(point, slope, horizon.shape)
@@ -109,9 +106,17 @@ for (input, file_path) in zip(images, images.files):
     # black out too dark and too light pixels
     for i in range(len(output[0])):
         for j in range(len(output)):
-            if output[j][i][0] < dark_limit and output[j][i][1] < dark_limit and output[j][i][2] < dark_limit:
+            if (
+                output[j][i][0] < dark_limit
+                and output[j][i][1] < dark_limit
+                and output[j][i][2] < dark_limit
+            ):
                 output[j][i] = [0, 0, 0]
-            elif output[j][i][0] > light_limit and output[j][i][1] > light_limit and output[j][i][2] > light_limit:
+            elif (
+                output[j][i][0] > light_limit
+                and output[j][i][1] > light_limit
+                and output[j][i][2] > light_limit
+            ):
                 output[j][i] = [0, 0, 0]
 
     # blank out masing image
@@ -129,8 +134,7 @@ for (input, file_path) in zip(images, images.files):
 
         # draw line to image
         [p1, p2, middle] = lines[0]
-        horizon[draw.line(floor(p1[1]), floor(p1[0]),
-                          floor(p2[1]), floor(p2[0]))] = 1
+        horizon[draw.line(floor(p1[1]), floor(p1[0]), floor(p2[1]), floor(p2[0]))] = 1
 
         # mask
         for i in range(len(horizon[0])):
@@ -141,7 +145,7 @@ for (input, file_path) in zip(images, images.files):
             for j in range(len(horizon)):
 
                 # detect line
-                if (horizon[j][i] == 1):
+                if horizon[j][i] == 1:
                     set_to = 1
 
                 # change pixel
@@ -171,10 +175,13 @@ for (input, file_path) in zip(images, images.files):
         average = [round(np.sum(c) / len(c)) for c in colors]
 
         # print average color
-        print(f'> Average color: {average}')
+        print(f"> Average color: {average}")
     else:
-        print('> Can\'t process image!')
+        print("> Can't process image!")
 
     # save image
-    io.imsave(output_path + file_name + output_file_format,
-              util.img_as_ubyte(output), check_contrast=False)
+    io.imsave(
+        output_path + file_name + output_file_format,
+        util.img_as_ubyte(output),
+        check_contrast=False,
+    )
