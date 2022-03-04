@@ -5,20 +5,18 @@ import numpy as np
 
 # settings
 input_path = "./cache/input/"
-output_path = "./cache/output/"
-
 input_file_format = ".jpg"
+
+output_path = "./cache/output/"
 output_file_format = ".png"
 
 dark_limit = 150
 light_limit = 230
 
-angleFrom = np.pi / 2.1
-angleTo = np.pi / 1.9
-angleDetail = 10
-
+angle_from = np.pi / 2.1
+angle_to = np.pi / 1.9
+angle_detail = 10
 noise_limit = 4
-
 near_top_tresshold = 4
 
 # infinite line to endpoint generator
@@ -75,7 +73,7 @@ for (input, file_path) in zip(images, images.files):
             x[...] = 0 if x < max / noise_limit else max
 
     # Classic straight-line Hough transform
-    tested_angles = np.linspace(angleFrom, angleTo, angleDetail, endpoint=False)
+    tested_angles = np.linspace(angle_from, angle_to, angle_detail, endpoint=False)
     h, t, d = transform.hough_line(horizon, theta=tested_angles)
 
     # set up list
