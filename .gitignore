@@ -8,5 +8,4 @@ node_modules/
 settings/auth.json
 
 # cache
-cache/downloads/*
-cache/metadata.json
+cache/
