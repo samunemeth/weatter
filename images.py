@@ -3,10 +3,6 @@ from math import floor
 from skimage import filters, io, util, color, transform, draw
 import numpy as np
 
-# (can be removed)
-# from matplotlib import cm
-# from matplotlib import pyplot as plt
-
 # settings
 input_path = './cache/input/'
 output_path = './cache/output/'
@@ -85,11 +81,6 @@ for (input, file_path) in zip(images, images.files):
         angleFrom, angleTo, angleDetail, endpoint=False)
     h, t, d = transform.hough_line(horizon, theta=tested_angles)
 
-    # plot settings (can be removed)
-    # plt.imshow(input, cmap=cm.gray)
-    # plt.ylim(input.shape[0], 0)
-    # plt.xlim(input.shape[1], 0)
-
     # set up list
     lines = []
 
@@ -106,15 +97,8 @@ for (input, file_path) in zip(images, images.files):
         # calculate middle
         middle = ((p1[0] + p2[0]) / 2, (p1[1] + p2[1]) / 2)
 
-        # visualize (can be removed)
-        # plt.plot(middle[0], middle[1], 'ro')
-        # plt.plot((p1[0], p2[0]), (p1[1], p2[1]), 'go')
-
         # add line to list
         lines.append([p1, p2, middle])
-
-    # show plot (can be removed)
-    # plt.show()
 
     # get highest line
     lines.sort(key=lambda e: e[2][1])
@@ -192,4 +176,5 @@ for (input, file_path) in zip(images, images.files):
         print('> Can\'t process image!')
 
     # save image
-    io.imsave(output_path + file_name + output_file_format, util.img_as_ubyte(output), check_contrast=False)
+    io.imsave(output_path + file_name + output_file_format,
+              util.img_as_ubyte(output), check_contrast=False)
