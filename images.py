@@ -4,7 +4,7 @@ from skimage import filters, io, util, color, transform, draw
 import numpy as np
 
 # settings
-input_path = "./cache/input/"
+input_path = "./cache/downloads/"
 input_file_format = ".jpg"
 
 output_path = "./cache/output/"
