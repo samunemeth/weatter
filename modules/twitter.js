@@ -204,14 +204,14 @@ module.exports = {
     download: {
 
         // downloads one file
-        file: function (uri, filename, callback) {
+        file: async function (uri, filename, callback) {
             request.head(uri, () => {
                 request(uri).pipe(fs.createWriteStream(filename)).on('close', callback);
             });
         },
 
         // downloads list of images
-        images: function (images) {
+        images: async function (images) {
             for (image of images) {
                 this.file(image.image.url, `${settings.twitter.downloadLoc}${image.image.id}.jpg`, () => {});
             }

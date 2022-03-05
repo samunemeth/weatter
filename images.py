@@ -1,6 +1,7 @@
 # imports
 from math import floor
 from skimage import filters, io, util, color, transform, draw
+from sys import stdout
 import numpy as np
 
 # settings
@@ -61,6 +62,7 @@ for (input, file_path) in zip(images, images.files):
 
     # print (can be removed)
     print(f"> Processing image: '{file_name}'")
+    stdout.flush()
 
     # get edges of image
     horizon = color.rgb2gray(input)
@@ -175,7 +177,10 @@ for (input, file_path) in zip(images, images.files):
         # print average color
         print(f"> Average color: {average}")
     else:
+
+        # print info
         print("> Can't process image!")
+    stdout.flush()
 
     # save image
     io.imsave(
