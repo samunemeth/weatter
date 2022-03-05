@@ -120,7 +120,6 @@ module.exports = {
             try {
                 response = await response.json();
             } catch {
-                response = await response.json();
                 throw response;
             }
             
